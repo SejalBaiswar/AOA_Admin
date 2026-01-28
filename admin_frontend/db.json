@@ -1,0 +1,255 @@
+{
+  "members": [
+    {
+      "id": "47a1",
+      "firstName": "Abhay",
+      "middleName": "",
+      "lastName": "Raghuwanshi",
+      "email": "abhay@gmail.com",
+      "phoneCode": "+91",
+      "phoneNumber": "7879545112",
+      "specialization": "General Dentist",
+      "practitionerType": "Practice",
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "India",
+          "state": "Madhya Pradesh",
+          "city": "Vidisha",
+          "zip": "464001",
+          "street": "Green City",
+          "houseNo": "27"
+        }
+      ],
+      "status": "active"
+    },
+    {
+      "id": "ba96",
+      "firstName": "Gautam",
+      "lastName": "Malviya",
+      "email": "gautam@gmail.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "Orthodontist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "India",
+          "state": "Madhya Pradesh",
+          "city": "Vidisha",
+          "zip": "461331",
+          "street": "Green City",
+          "houseNo": "27"
+        }
+      ]
+    },
+    {
+      "id": "d874",
+      "firstName": "Gautam",
+      "lastName": "Malviya",
+      "email": "Ormca@email.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "General Dentist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "India",
+          "state": "Madhya Pradesh",
+          "city": "Ajaigarh",
+          "zip": "461331",
+          "street": "Green City",
+          "houseNo": "27"
+        }
+      ]
+    },
+    {
+      "id": "c807",
+      "firstName": "Abhay",
+      "lastName": "ra",
+      "email": "Ormca@email.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "Orthodontist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "Afghanistan",
+          "state": "Badakhshan",
+          "city": "Ashkāsham",
+          "zip": "461331",
+          "street": "Green City",
+          "houseNo": "27"
+        }
+      ]
+    },
+    {
+      "id": "c2b7",
+      "firstName": "Abhay",
+      "lastName": "ra",
+      "email": "Ormca@email.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "General Dentist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "Afghanistan",
+          "state": "Badakhshan",
+          "city": "Ashkāsham",
+          "zip": "461331",
+          "street": "Green City",
+          "houseNo": "27"
+        }
+      ]
+    },
+    {
+      "id": "0167",
+      "firstName": "Abhay",
+      "lastName": "Raghuwanshi",
+      "email": "abhay@gmail.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "General Dentist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "India",
+          "state": "Madhya Pradesh",
+          "city": "Vidisha",
+          "zip": "461331",
+          "street": "Mudit Homes",
+          "houseNo": "27"
+        }
+      ]
+    },
+    {
+      "id": "d0e2",
+      "firstName": "Abhay",
+      "lastName": "Raghuwanshi",
+      "email": "Abhay@gmail.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "General Dentist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "Afghanistan",
+          "state": "Badakhshan",
+          "city": "Ashkāsham",
+          "zip": "461331",
+          "street": "Mudit Homes",
+          "houseNo": "27"
+        }
+      ]
+    },
+    {
+      "id": "8476",
+      "firstName": "Abhay",
+      "lastName": "Raghuwanshi",
+      "email": "abhay@gmail.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "Orthodontist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "Afghanistan",
+          "state": "Badakhshan",
+          "city": "Ashkāsham",
+          "zip": "461331",
+          "street": "Mudit Homes",
+          "houseNo": "27"
+        }
+      ]
+    },
+    {
+      "id": "0f49",
+      "firstName": "Abhay",
+      "lastName": "Raghuwanshi",
+      "email": "abhay@gmail.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "Orthodontist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "India",
+          "state": "Madhya Pradesh",
+          "city": "Vidisha",
+          "zip": "461331",
+          "street": "Mudit Homes",
+          "houseNo": "27"
+        }
+      ]
+    },
+    {
+      "id": "3563",
+      "firstName": "Gautam",
+      "lastName": "Malviya",
+      "email": "gautam@gmail.com",
+      "status": "active",
+      "professionalInfo": {
+        "specialization": "Orthodontist",
+        "practitionerType": "Practice"
+      },
+      "addresses": [
+        {
+          "addressType": "Home",
+          "countryCode": "",
+          "country": "India",
+          "state": "Madhya Pradesh",
+          "city": "Vidisha",
+          "zip": "461331",
+          "street": "Mudit Homes",
+          "houseNo": "27"
+        }
+      ]
+    }
+  ],
+  "partners": [
+    {
+      "id": "6af3",
+      "name": "Ormca",
+      "email": "Ormca@email.com",
+      "phoneCode": "+91",
+      "phoneNumber": "7879545112",
+      "country": "India",
+      "state": "Madhya Pradesh",
+      "city": "Harda",
+      "status": "active",
+      "addresses": [
+        {
+          "country": "India",
+          "state": "Madhya Pradesh",
+          "city": "Harda"
+        }
+      ]
+    }
+  ]
+}
