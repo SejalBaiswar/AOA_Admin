@@ -6,8 +6,9 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
-  ParseUUIDPipe 
+  ParseUUIDPipe,
+  HttpStatus,
+  HttpCode,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreatePracticeDto } from "./dto/create-practice.dto";
@@ -18,67 +19,147 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // Practice endpoints
+  /* =========================
+     COMMON RESPONSE BUILDER
+  ========================== */
+  private buildResponse(status: number, message: string, data: any) {
+    return {
+      status,
+      success: status >= 200 && status < 300,
+      message,
+      data,
+    };
+  }
+
+  /* =========================
+        PRACTICE ENDPOINTS
+  ========================== */
+
   @Post("members")
-  createPractice(@Body() createPracticeDto: CreatePracticeDto) {
-    return this.usersService.createPractice(createPracticeDto);
+  @HttpCode(HttpStatus.CREATED)
+  async createPractice(@Body() createPracticeDto: CreatePracticeDto) {
+    const user = await this.usersService.createPractice(createPracticeDto);
+
+    return this.buildResponse(
+      HttpStatus.CREATED,
+      "Practice created successfully",
+      this.transformUserResponse(user),
+    );
   }
 
   @Get("members")
   async findAllPractices() {
     const users = await this.usersService.findAllPractices();
-    return users.map((user) => this.transformUserResponse(user));
+
+    return this.buildResponse(
+      HttpStatus.OK,
+      "Practices fetched successfully",
+      users.map((user) => this.transformUserResponse(user)),
+    );
   }
 
   @Get("members/:id")
-  async findOnePractice(@Param("id", new ParseUUIDPipe()) id: string) {
+  async findOnePractice(@Param("id", ParseUUIDPipe) id: string) {
     const user = await this.usersService.findOne(id);
-    return this.transformUserResponse(user);
+
+    return this.buildResponse(
+      HttpStatus.OK,
+      "Practice fetched successfully",
+      this.transformUserResponse(user),
+    );
   }
 
   @Patch("members/:id")
-  updatePractice(
-    @Param("id", new ParseUUIDPipe()) id: string,
+  async updatePractice(
+    @Param("id", ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.update(id, updateUserDto);
+    const user = await this.usersService.update(id, updateUserDto);
+
+    return this.buildResponse(
+      HttpStatus.OK,
+      "Practice updated successfully",
+      this.transformUserResponse(user),
+    );
   }
 
   @Delete("members/:id")
-  removePractice(@Param("id", new ParseUUIDPipe()) id: string) {
-    return this.usersService.remove(id);
+  async removePractice(@Param("id", ParseUUIDPipe) id: string) {
+    await this.usersService.remove(id);
+
+    return this.buildResponse(
+      HttpStatus.OK,
+      "Practice deleted successfully",
+      null,
+    );
   }
 
-  // Partner endpoints
+  /* =========================
+         PARTNER ENDPOINTS
+  ========================== */
+
   @Post("partners")
-  createPartner(@Body() createPartnerDto: CreatePartnerDto) {
-    return this.usersService.createPartner(createPartnerDto);
+  @HttpCode(HttpStatus.CREATED)
+  async createPartner(@Body() createPartnerDto: CreatePartnerDto) {
+    const user = await this.usersService.createPartner(createPartnerDto);
+
+    return this.buildResponse(
+      HttpStatus.CREATED,
+      "Partner created successfully",
+      this.transformPartnerResponse(user),
+    );
   }
 
   @Get("partners")
   async findAllPartners() {
     const users = await this.usersService.findAllPartners();
-    return users.map((user) => this.transformPartnerResponse(user));
+
+    return this.buildResponse(
+      HttpStatus.OK,
+      "Partners fetched successfully",
+      users.map((user) => this.transformPartnerResponse(user)),
+    );
   }
 
   @Get("partners/:id")
-  async findOnePartner(@Param("id", new ParseUUIDPipe()) id: string) {
+  async findOnePartner(@Param("id", ParseUUIDPipe) id: string) {
     const user = await this.usersService.findOne(id);
-    return this.transformPartnerResponse(user);
+
+    return this.buildResponse(
+      HttpStatus.OK,
+      "Partner fetched successfully",
+      this.transformPartnerResponse(user),
+    );
   }
 
   @Patch("partners/:id")
-  updatePartner(
-    @Param("id", new ParseUUIDPipe()) id: string,
+  async updatePartner(
+    @Param("id", ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.update(id, updateUserDto);
+    const user = await this.usersService.update(id, updateUserDto);
+
+    return this.buildResponse(
+      HttpStatus.OK,
+      "Partner updated successfully",
+      this.transformPartnerResponse(user),
+    );
   }
 
   @Delete("partners/:id")
-  removePartner(@Param("id", new ParseUUIDPipe()) id: string) {
-    return this.usersService.remove(id);
+  async removePartner(@Param("id", ParseUUIDPipe) id: string) {
+    await this.usersService.remove(id);
+
+    return this.buildResponse(
+      HttpStatus.OK,
+      "Partner deleted successfully",
+      null,
+    );
   }
+
+  /* =========================
+        RESPONSE TRANSFORMS
+  ========================== */
 
   private transformUserResponse(user: any) {
     return {
@@ -108,14 +189,13 @@ export class UsersController {
   }
 
   private transformPartnerResponse(user: any) {
-    // Combine firstName and lastName into name for partners
     const name = [user.firstName, user.middleName, user.lastName]
       .filter(Boolean)
       .join(" ");
 
     return {
       id: user.id,
-      name: name,
+      name,
       email: user.email,
       phoneNumber: user.phoneNumber,
       practitionerType: user.practitionerType,

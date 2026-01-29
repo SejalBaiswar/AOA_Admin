@@ -15,7 +15,7 @@ export default function Partners() {
     try {
       const res = await fetch("http://localhost:5000/partners");
       const data = await res.json();
-      setPartners(data);
+      setPartners(data.data);
     } catch (e) {
       console.error(e && "Failed to fetch partners");
     } finally {

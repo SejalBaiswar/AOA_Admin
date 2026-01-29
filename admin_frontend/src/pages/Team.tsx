@@ -18,7 +18,7 @@ export default function Team() {
     try {
       const res = await fetch("http://localhost:5000/members");
       const data = await res.json();
-      setMembers(data);
+      setMembers(data.data);
     } catch (error) {
       console.error("Failed to fetch members", error);
     } finally {
