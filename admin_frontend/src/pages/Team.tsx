@@ -3,6 +3,7 @@ import UserFormSheet from "../components/forms/UserFormSheet";
 import ViewMemberSheet from "../components/forms/ViewMemberSheet";
 import ActionMenu from "../components/ActionMenu";
 import type { Member, MemberStatus } from "../types/member";
+import DefaultSkeleton from "../components/Skeleton/DefaultSkeleton";
 
 /* ---------- TYPES ---------- */
 
@@ -48,8 +49,6 @@ export default function Team() {
 
   return (
     <>
-      {/* Breadcrumb */}
-
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-[28px] font-semibold">Practices</h1>
@@ -94,7 +93,8 @@ export default function Team() {
           height: "100vh",
         }}
       >
-        <table className="w-full text-sm"
+        <table
+          className="w-full text-sm"
           style={{
             width: "100%",
             borderCollapse: "separate",
@@ -139,8 +139,12 @@ export default function Team() {
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={8} style={emptyCell}>
-                  Loading...
+                <td colSpan={8}>
+                  <div className="p-4 space-y-4">
+                    <DefaultSkeleton />
+                    <DefaultSkeleton />
+                    <DefaultSkeleton />
+                  </div>
                 </td>
               </tr>
             )}
@@ -163,10 +167,14 @@ export default function Team() {
                   <td style={cell}>{m.lastName}</td>
                   <td style={{ ...cell, color: "#2563eb" }}>{m.email}</td>
                   <td style={cell}>
-                    {m.specialization ?? m.professionalInfo?.specialization ?? "-"}
+                    {m.specialization ??
+                      m.professionalInfo?.specialization ??
+                      "-"}
                   </td>
                   <td style={cell}>
-                    {m.practitionerType ?? m.professionalInfo?.practitionerType ?? "-"}
+                    {m.practitionerType ??
+                      m.professionalInfo?.practitionerType ??
+                      "-"}
                   </td>
                   <td style={cell}>
                     {address ? `${address.city}, ${address.state}` : "-"}

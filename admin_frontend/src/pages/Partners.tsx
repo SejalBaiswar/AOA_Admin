@@ -3,6 +3,7 @@ import PartnerFormSheet from "../components/partners/PartnerFormSheet";
 import ViewPartnerSheet from "../components/partners/ViewPartnerSheet";
 import type { Partner, PartnerStatus } from "../types/partner";
 import PartnerActionMenu from "../components/partners/PartnerActionMenu";
+import DefaultSkeleton from "../components/Skeleton/DefaultSkeleton";
 
 export default function Partners() {
   const [openSheet, setOpenSheet] = useState(false);
@@ -82,14 +83,17 @@ export default function Partners() {
             <tr>
               {["Name", "Email", "Phone", "Location", "Status", "Action"].map(
                 (h) => (
-                  <th key={h}  style={{
-                    padding: "14px 16px",
-                    textAlign: "left",
-                    fontWeight: 700,
-                    color: "#374151",
-                    fontSize: "13px",
-                    borderBottom: "1px solid #e5e7eb",
-                  }}>
+                  <th
+                    key={h}
+                    style={{
+                      padding: "14px 16px",
+                      textAlign: "left",
+                      fontWeight: 700,
+                      color: "#374151",
+                      fontSize: "13px",
+                      borderBottom: "1px solid #e5e7eb",
+                    }}
+                  >
                     {h}
                   </th>
                 ),
@@ -100,8 +104,12 @@ export default function Partners() {
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={6} className="p-6 text-center">
-                  Loading...
+                <td colSpan={6}>
+                  <div className="p-4 space-y-4">
+                    <DefaultSkeleton />
+                    <DefaultSkeleton />
+                    <DefaultSkeleton />
+                  </div>
                 </td>
               </tr>
             )}
@@ -113,9 +121,7 @@ export default function Partners() {
                   <tr key={p.id} className="border-t">
                     <td className="px-4 py-3">{p.name}</td>
                     <td className="px-4 py-3 text-blue-600">{p.email}</td>
-                    <td className="px-4 py-3">
-                      {p.phoneNumber || "-"}
-                    </td>
+                    <td className="px-4 py-3">{p.phoneNumber || "-"}</td>
                     <td className="px-4 py-3">
                       {addr ? `${addr.city}, ${addr.state}` : "-"}
                     </td>
