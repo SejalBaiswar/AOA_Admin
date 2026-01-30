@@ -139,11 +139,11 @@ export default function Team() {
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={8}>
+                <td colSpan={6}>
                   <div className="p-4 space-y-4">
-                    <DefaultSkeleton />
-                    <DefaultSkeleton />
-                    <DefaultSkeleton />
+                    {Array.from({ length: 10 }).map((_, index) => (
+                      <DefaultSkeleton key={index} />
+                    ))}
                   </div>
                 </td>
               </tr>

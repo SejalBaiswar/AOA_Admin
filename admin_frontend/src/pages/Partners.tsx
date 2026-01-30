@@ -106,9 +106,9 @@ export default function Partners() {
               <tr>
                 <td colSpan={6}>
                   <div className="p-4 space-y-4">
-                    <DefaultSkeleton />
-                    <DefaultSkeleton />
-                    <DefaultSkeleton />
+                    {Array.from({ length: 10 }).map((_, index) => (
+                      <DefaultSkeleton key={index} />
+                    ))}
                   </div>
                 </td>
               </tr>
