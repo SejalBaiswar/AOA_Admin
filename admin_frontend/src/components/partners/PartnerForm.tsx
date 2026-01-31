@@ -6,8 +6,8 @@ import { partnerSchema, type PartnerFormValues } from "./partner.schema";
 
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import SearchSelect from "../forms/SearchSelect";
-import RequiredLabel from "../forms/RequiredLabel";
+import SearchSelect from "../common/SearchSelect";
+import RequiredLabel from "../common/RequiredLabel";
 
 import { useCountries } from "../../hooks/useCountries";
 import { useStates } from "../../hooks/useStates";
@@ -28,6 +28,13 @@ interface Props {
 
 export default function PartnerForm({ onSuccess }: Props) {
   const countries = useCountries();
+
+  /* ---------- COMMON CLASSES ---------- */
+  const inputClass =
+    "h-9 text-sm shadow-none focus-visible:ring-0 focus-visible:ring-offset-0";
+
+  const selectClass =
+    "h-9 w-full rounded-md border px-3 text-sm shadow-none focus:outline-none focus:ring-0";
 
   const form = useForm<PartnerFormValues>({
     resolver: zodResolver(partnerSchema),
@@ -53,13 +60,11 @@ export default function PartnerForm({ onSuccess }: Props) {
   const cities = useCities(selectedCountry, selectedState);
 
   /* ---------- RESET CASCADE ---------- */
-  // reset state & city when country changes
   if (!selectedCountry && form.getValues("state")) {
     form.setValue("state", "");
     form.setValue("city", "");
   }
 
-  // reset city when state changes
   if (!selectedState && form.getValues("city")) {
     form.setValue("city", "");
   }
@@ -79,104 +84,106 @@ export default function PartnerForm({ onSuccess }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* ---------- BASIC INFO ---------- */}
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <RequiredLabel>Partner name</RequiredLabel>
-              </FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <RequiredLabel>Email</RequiredLabel>
-              </FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <RequiredLabel>Phone number</RequiredLabel>
-              </FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* ---------- PROVIDER TYPE ---------- */}
-        <FormField
-          control={form.control}
-          name="practitionerType"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Provider Type</FormLabel>
-              <FormControl>
-                <select
-                  {...field}
-                  className="h-9 w-full rounded-md border px-3"
-                >
-                  <option value="">Select</option>
-                  <option value="Lab">Lab</option>
-                </select>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-
-        {/* ---------- LOCATION ---------- */}
-        <Controller
-          control={form.control}
-          name="country"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <RequiredLabel>Country</RequiredLabel>
-              </FormLabel>
-              <SearchSelect
-                placeholder="Country"
-                value={field.value}
-                onChange={(val) => {
-                  field.onChange(val);
-                  form.setValue("state", "");
-                  form.setValue("city", "");
-                }}
-                options={countries.map((c) => ({
-                  label: c,
-                  value: c,
-                }))}
-              />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <h3 className="text-sm font-bold">Personal Information</h3>
 
         <div className="grid grid-cols-2 gap-4">
-          {/* ---------- STATE ---------- */}
+          {/* ---------- BASIC INFO ---------- */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <RequiredLabel>Partner name</RequiredLabel>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} className={inputClass} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <RequiredLabel>Email</RequiredLabel>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} className={inputClass} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <RequiredLabel>Phone number</RequiredLabel>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} className={inputClass} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* ---------- PROVIDER TYPE ---------- */}
+          <FormField
+            control={form.control}
+            name="practitionerType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Provider Type</FormLabel>
+                <FormControl>
+                  <select {...field} className={selectClass}>
+                    <option value="">Select</option>
+                    <option value="Lab">Lab</option>
+                  </select>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* ---------- LOCATION ---------- */}
+        <h3 className="text-sm font-bold">Addresses</h3>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Controller
+            control={form.control}
+            name="country"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <RequiredLabel>Country</RequiredLabel>
+                </FormLabel>
+                <SearchSelect
+                  placeholder="Country"
+                  value={field.value}
+                  onChange={(val) => {
+                    field.onChange(val);
+                    form.setValue("state", "");
+                    form.setValue("city", "");
+                  }}
+                  options={countries.map((c) => ({
+                    label: c,
+                    value: c,
+                  }))}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="state"
@@ -202,8 +209,9 @@ export default function PartnerForm({ onSuccess }: Props) {
               </FormItem>
             )}
           />
+        </div>
 
-          {/* ---------- CITY ---------- */}
+        <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="city"
@@ -226,10 +234,7 @@ export default function PartnerForm({ onSuccess }: Props) {
               </FormItem>
             )}
           />
-        </div>
 
-        {/* ---------- ADDRESS ---------- */}
-        <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="street"
@@ -237,12 +242,11 @@ export default function PartnerForm({ onSuccess }: Props) {
               <FormItem>
                 <FormLabel>Street</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} className={inputClass} />
                 </FormControl>
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="house_no"
@@ -250,7 +254,7 @@ export default function PartnerForm({ onSuccess }: Props) {
               <FormItem>
                 <FormLabel>House No</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} className={inputClass} />
                 </FormControl>
               </FormItem>
             )}

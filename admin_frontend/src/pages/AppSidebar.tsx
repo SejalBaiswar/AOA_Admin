@@ -5,12 +5,28 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger,
+  useSidebar,
 } from "../components/ui/sidebar";
-
 import { Home, Stethoscope, Handshake } from "lucide-react";
 import { NavLink } from "react-router-dom";
-
+ 
+/* ===== HAMBURGER ===== */
+function HamburgerTrigger() {
+  const { toggleSidebar } = useSidebar();
+ 
+  return (
+    <button
+      onClick={toggleSidebar}
+      className="flex flex-col gap-0.5 p-0.5"
+      aria-label="Toggle sidebar"
+    >
+      <span className="h-[2px] w-4 rounded-full bg-gray-500" />
+      <span className="h-[2px] w-4 rounded-full bg-gray-500" />
+      <span className="h-[2px] w-4 rounded-full bg-gray-500" />
+    </button>
+  );
+}
+ 
 export default function AppSidebar() {
   return (
     <Sidebar
@@ -18,20 +34,15 @@ export default function AppSidebar() {
       variant="inset"
       className="top-14 h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-gray-600 dark:border-gray-800"
     >
-      <SidebarHeader
-        className="
-          flex px-2
-          group-data-[state=expanded]:justify-end
-          group-data-[state=collapsed]:justify-start
-        "
-      >
-        <SidebarTrigger />
+      {/* HEADER */}
+      <SidebarHeader className="flex px-2 group-data-[state=expanded]:justify-end group-data-[state=collapsed]:justify-start">
+        <HamburgerTrigger />
       </SidebarHeader>
-
+ 
+      {/* CONTENT */}
       <SidebarContent>
         <SidebarMenu>
-
-          {/* ================= DASHBOARD ================= */}
+          {/* ===== DASHBOARD ===== */}
           <SidebarMenuItem>
             <NavLink to="/" end>
               {({ isActive }) => (
@@ -45,7 +56,7 @@ export default function AppSidebar() {
                 >
                   <Home
                     className={`h-4 w-4 ${
-                      isActive ? "text-white" : "text-gray-700"
+                      isActive ? "text-white" : "!text-black"
                     }`}
                   />
                   <span>Dashboard</span>
@@ -53,8 +64,8 @@ export default function AppSidebar() {
               )}
             </NavLink>
           </SidebarMenuItem>
-
-          {/* ================= PRACTICES ================= */}
+ 
+          {/* ===== PRACTICES ===== */}
           <SidebarMenuItem>
             <NavLink to="/practices">
               {({ isActive }) => (
@@ -76,8 +87,8 @@ export default function AppSidebar() {
               )}
             </NavLink>
           </SidebarMenuItem>
-
-          {/* ================= PARTNERS ================= */}
+ 
+          {/* ===== PARTNERS ===== */}
           <SidebarMenuItem>
             <NavLink to="/partners">
               {({ isActive }) => (
@@ -99,7 +110,6 @@ export default function AppSidebar() {
               )}
             </NavLink>
           </SidebarMenuItem>
-
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>

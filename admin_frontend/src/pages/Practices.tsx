@@ -1,4 +1,4 @@
-import PracticeTable from "./Team";
+import PracticeTable from "./Staff";
 
 export default function Practices() {
   return (

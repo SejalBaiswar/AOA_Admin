@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { FiUser, FiLogOut } from "react-icons/fi"; 
+import { FiUser, FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
@@ -13,7 +13,7 @@ export default function Navbar() {
     navigate("/login");
   };
 
-    useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -37,26 +37,32 @@ export default function Navbar() {
       <h1 className="text-2xl font-semibold">Admin Portal</h1>
 
       <div className="relative" ref={dropdownRef}>
+        {/* USER ICON */}
         <button
           onClick={() => setOpen(!open)}
-          className="flex items-center justify-center w-10 h-10 bg-white text-red-700 rounded-full hover:bg-red-200 transition-colors"
+          className="flex items-center justify-center w-10 h-10 bg-white text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
         >
           <FiUser size={20} />
         </button>
 
-      {open && (
-  <div className="absolute left-1/2 mt-3 w-25 -translate-x-1/2 bg-white text-black rounded-lg shadow-lg z-50 overflow-hidden">
-    <button
-      onClick={handleLogout}
-      className="flex items-center justify-center gap-2  px-3 py-2 w-full hover:bg-red-600 hover:text-white transition-colors font-medium"
-    >
-      <FiLogOut size={16} />
-      Logout
-    </button>
-  </div>
-)}
-
-
+        {open && (
+          <div className="absolute left-1/2 mt-3 w-28 -translate-x-1/2 bg-white text-black rounded-lg shadow-lg z-50 overflow-hidden">
+            <button
+              onClick={handleLogout}
+              className="
+                flex items-center justify-center gap-2
+  px-3 py-2 w-full
+  bg-orange-600 text-white
+  hover:opacity-70
+  transition-opacity
+  font-medium
+              "
+            >
+              <FiLogOut size={16} />
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -29,7 +29,7 @@ export default function SearchSelect({
     return options.find((o) => o.value === value)?.label ?? "";
   }, [options, value]);
 
-  /* ---------- OUTSIDE CLICK (USE CLICK, NOT MOUSEDOWN) ---------- */
+  /* ---------- OUTSIDE CLICK ---------- */
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -65,13 +65,34 @@ export default function SearchSelect({
           setSearch("");
           setOpen(true);
         }}
-        className="h-9 w-full rounded-md border px-3 cursor-pointer bg-white"
+        className="
+          h-9
+          w-full
+          rounded-md
+          border
+          px-3
+          text-sm
+          cursor-pointer
+          bg-white
+          shadow-none
+          focus:outline-none
+          focus:ring-0
+        "
       />
 
       {open && (
         <div
-          className="absolute z-50 mt-1 w-full rounded-md border bg-white shadow"
-          onClick={(e) => e.stopPropagation()} // ✅ CRITICAL
+          className="
+            absolute
+            z-50
+            mt-1
+            w-full
+            rounded-md
+            border
+            bg-white
+            shadow-none
+          "
+          onClick={(e) => e.stopPropagation()}
         >
           {/* SEARCH */}
           <input
@@ -79,17 +100,28 @@ export default function SearchSelect({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search..."
-            className="w-full border-b px-3 py-2 text-sm outline-none"
+            className="
+              w-full
+              border-b
+              px-3
+              py-2
+              text-sm
+              shadow-none
+              outline-none
+              focus:ring-0
+            "
           />
 
           <div className="max-h-48 overflow-y-auto">
             {filteredOptions.length === 0 && (
-              <div className="px-3 py-2 text-sm text-gray-500">No results</div>
+              <div className="px-3 py-2 text-sm text-gray-500">
+                No results
+              </div>
             )}
 
             {filteredOptions.map((o) => (
               <div
-                key={`${o.value}-${o.label}`} // ✅ UNIQUE
+                key={`${o.value}-${o.label}`}
                 className="px-3 py-2 cursor-pointer hover:bg-gray-100"
                 onClick={() => {
                   onChange(o.value);

@@ -1,7 +1,4 @@
-import {
-  Sheet,
-  SheetContent,
-} from "../../components/ui/sheet";
+import { Sheet, SheetContent } from "../ui/sheet";
 
 import InviteMemberForm from "./InviteMemberForm";
 
@@ -32,11 +29,11 @@ export default function UserFormSheet({
         "
       >
         {/* ✅ FIXED HEADER */}
-        <div className="border-b px-6 py-4"
-        style={{backgroundColor:"#d2e9f2bd"}}>
-          <h2 className="text-lg font-semibold">
-            Invite Practice
-          </h2>
+        <div
+          className="border-b px-6 py-4"
+          style={{ backgroundColor: "#d2e9f2bd" }}
+        >
+          <h2 className="text-lg font-semibold">Invite Practice</h2>
           <p className="text-sm text-muted-foreground">
             Fill the form and invite a new practice
           </p>
@@ -45,10 +42,10 @@ export default function UserFormSheet({
         {/* ✅ ONLY SCROLLABLE AREA */}
         <div className="h-[calc(100vh-80px)] overflow-y-auto px-6 py-6">
           <InviteMemberForm
-           onSuccess={() => {
-            onSuccess?.();     // 🔁 refresh table
-            onOpenChange(false); // ❌ close AFTER refresh trigger
-          }}
+            onSuccess={() => {
+              onSuccess?.(); // 🔁 refresh table
+              onOpenChange(false); // ❌ close AFTER refresh trigger
+            }}
           />
         </div>
       </SheetContent>

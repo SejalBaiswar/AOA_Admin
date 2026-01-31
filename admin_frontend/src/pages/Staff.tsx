@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import UserFormSheet from "../components/forms/UserFormSheet";
-import ViewMemberSheet from "../components/forms/ViewMemberSheet";
+import UserFormSheet from "../components/staff/UserFormSheet";
+import ViewMemberSheet from "../components/staff/ViewMemberSheet";
 import ActionMenu from "../components/ActionMenu";
 import type { Member, MemberStatus } from "../types/member";
 import DefaultSkeleton from "../components/Skeleton/DefaultSkeleton";
@@ -167,7 +167,7 @@ export default function Team() {
                 <tr
                   key={m.id}
                   style={{
-                    borderBottom:"1px solid #b4b4b4",
+                    borderBottom: "1px solid #b4b4b4",
                   }}
                 >
                   <td style={cell}>{m.firstName}</td>

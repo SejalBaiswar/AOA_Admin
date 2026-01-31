@@ -1,8 +1,7 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import AddressFields from "./AddressFields";
-import RequiredLabel from "./RequiredLabel";
-
+import AddressFields from "../common/AddressFields";
+import RequiredLabel from "../common/RequiredLabel";
 import {
   Form,
   FormField,
@@ -15,20 +14,24 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-// import SearchSelect from "./SearchSelect";
-
 import { useCountries } from "../../hooks/useCountries";
 
 import {
   inviteMemberSchema,
   type InviteMemberFormValues,
-} from "./inviteMember.schema";
+} from "../staff/inviteMember.schema";
 
 export default function InviteMemberForm({
   onSuccess,
 }: {
   onSuccess?: () => void;
 }) {
+  const inputClass =
+    "h-9 text-sm shadow-none focus-visible:ring-0 focus-visible:ring-offset-0";
+
+  const selectClass =
+    "h-9 w-full rounded-md border px-3 text-sm shadow-none focus:outline-none focus:ring-0";
+
   const form = useForm<InviteMemberFormValues>({
     resolver: zodResolver(inviteMemberSchema),
     defaultValues: {
@@ -62,9 +65,6 @@ export default function InviteMemberForm({
   const countries = useCountries();
 
   const onSubmit = async (data: InviteMemberFormValues) => {
-    console.log("Form Data", data);
-    console.log("Submit Triggered");
-
     const payload = {
       firstName: data.firstName,
       middleName: data.middleName || null,
@@ -91,6 +91,7 @@ export default function InviteMemberForm({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
+
     form.reset();
     onSuccess?.();
   };
@@ -99,6 +100,8 @@ export default function InviteMemberForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         {/* ---------- PERSONAL INFO ---------- */}
+        <h3 className="text-sm font-bold">Personal Information</h3>
+
         <div className="grid grid-cols-3 gap-4">
           <FormField
             control={form.control}
@@ -109,7 +112,7 @@ export default function InviteMemberForm({
                   <RequiredLabel>First name</RequiredLabel>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} className={inputClass} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,7 +126,7 @@ export default function InviteMemberForm({
               <FormItem>
                 <FormLabel>Middle name</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} className={inputClass} />
                 </FormControl>
               </FormItem>
             )}
@@ -135,10 +138,10 @@ export default function InviteMemberForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <RequiredLabel> Last name</RequiredLabel>
+                  <RequiredLabel>Last name</RequiredLabel>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} className={inputClass} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -146,40 +149,43 @@ export default function InviteMemberForm({
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <RequiredLabel>Email</RequiredLabel>
-              </FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <RequiredLabel>Email</RequiredLabel>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} className={inputClass} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {/* ---------- PHONE ---------- */}
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <RequiredLabel>Phone number</RequiredLabel>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="9876543210" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <RequiredLabel>Phone number</RequiredLabel>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} className={inputClass} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {/* ---------- PROFESSIONAL INFO ---------- */}
+        <h3 className="text-sm font-bold">Professional Information</h3>
+
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
@@ -188,10 +194,7 @@ export default function InviteMemberForm({
               <FormItem>
                 <FormLabel>Specialization</FormLabel>
                 <FormControl>
-                  <select
-                    {...field}
-                    className="h-9 w-full rounded-md border px-3"
-                  >
+                  <select {...field} className={selectClass}>
                     <option value="">Select</option>
                     <option>General Dentist</option>
                     <option>Orthodontist</option>
@@ -212,10 +215,7 @@ export default function InviteMemberForm({
               <FormItem>
                 <FormLabel>Provider Type</FormLabel>
                 <FormControl>
-                  <select
-                    {...field}
-                    className="h-9 w-full rounded-md border px-3"
-                  >
+                  <select {...field} className={selectClass}>
                     <option value="">Select</option>
                     <option>Practice</option>
                   </select>
@@ -225,42 +225,40 @@ export default function InviteMemberForm({
           />
         </div>
 
-        {/* ---------- ADDRESSES ---------- */}
-        <div className="space-y-4">
-          <h3 className="text-sm font-semibold">Addresses</h3>
+        {/* ---------- ADDRESSES (FLAT LIKE PARTNER FORM) ---------- */}
+        <h3 className="text-sm font-bold">Addresses</h3>
 
-          {fields.map((item, index) => (
-            <AddressFields
-              key={item.id}
-              form={form}
-              index={index}
-              countries={countries}
-              remove={remove}
-              canRemove={fields.length > 1}
-            />
-          ))}
+        {fields.map((item, index) => (
+          <AddressFields
+            key={item.id}
+            form={form}
+            index={index}
+            countries={countries}
+            remove={remove}
+            canRemove={fields.length > 1}
+          />
+        ))}
 
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              append({
-                addressType: "",
-                country: "",
-                state: "",
-                city: "",
-                zip: "",
-                zipCode: "",
-                street: "",
-                house_no: "",
-              })
-            }
-          >
-            + Add another address
-          </Button>
-        </div>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() =>
+            append({
+              addressType: "",
+              country: "",
+              state: "",
+              city: "",
+              zip: "",
+              zipCode: "",
+              street: "",
+              house_no: "",
+            })
+          }
+        >
+          + Add another address
+        </Button>
 
-        {/* ---------- ACTIONS ---------- */}
+        {/* ---------- ACTION ---------- */}
         <div className="flex justify-end">
           <Button
             type="submit"
